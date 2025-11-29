@@ -1,0 +1,250 @@
+<!--
+Simple single-file responsive website
+Save as index.html and open in a browser to preview.
+What it includes:
+ - Responsive header + nav (mobile toggle)
+ - Hero section
+ - Features grid
+ - Gallery (placeholder images from picsum.photos)
+ - Contact form (client-side validation)
+ - Smooth scroll and basic accessibility touches
+
+Tell me what to change (colors, fonts, sections), and I will update it.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Acme — Simple Responsive Website</title>
+  <meta name="description" content="A clean, responsive single-file website starter." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#06b6d4; --accent-2:#7c3aed;
+      --radius:14px; --glass: rgba(255,255,255,0.03);
+      --maxw:1100px;
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071023 0%, #071726 100%);color:#e6eef6}
+    a{color:var(--accent);text-decoration:none}
+    header{backdrop-filter: blur(6px);position:sticky;top:12px;z-index:40;margin:12px auto;max-width:calc(var(--maxw) + 32px);padding:8px;border-radius:16px}
+    .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:24px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav{display:flex;gap:18px;align-items:center}
+    .cta{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;padding:48px 20px}
+    .hero-inner{display:flex;flex-direction:column;gap:18px}
+    h1{font-size:clamp(28px,4.5vw,44px);margin:0;line-height:1.02}
+    p.lead{color:var(--muted);max-width:74ch}
+
+    /* Cards */
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),var(--glass));padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .grid-2{display:grid;grid-template-columns:1fr 320px;gap:20px}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+    .gallery img{width:100%;height:120px;object-fit:cover;border-radius:10px}
+
+    /* Contact */
+    form{display:flex;flex-direction:column;gap:10px}
+    input,textarea{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    button[type=submit]{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));font-weight:700}
+
+    footer{opacity:0.9;padding:24px 0;color:var(--muted)}
+
+    /* Responsive */
+    .mobile-toggle{display:none}
+    @media (max-width:880px){
+      .grid-2{grid-template-columns:1fr}
+      nav{display:none}
+      .mobile-toggle{display:block}
+      header{padding:12px}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600}
+
+    /* focus states */
+    a:focus,button:focus,input:focus,textarea:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <header class="container" role="banner">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">AC</div>
+        <div>
+          <div style="font-weight:700">Acme</div>
+          <div class="muted" style="font-size:12px">Simple site starter</div>
+        </div>
+      </div>
+
+      <nav role="navigation" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#contact">Get Started</a>
+      </nav>
+
+      <button class="mobile-toggle" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+    </div>
+
+    <div id="mobileMenu" style="display:none;margin-top:12px">
+      <a href="#features">Features</a> · <a href="#gallery">Gallery</a> · <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Beautiful, fast, and simple websites — ready in seconds.</h1>
+          <p class="lead">A single-file, responsive website starter you can edit and deploy. Perfect for portfolios, landing pages, or prototypes.</p>
+          <div style="display:flex;gap:12px;margin-top:6px">
+            <a class="pill" href="#features">Explore features</a>
+            <a href="#contact" class="pill">Contact us</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-hidden="false">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font-weight:700">Quick facts</div>
+          <div class="muted">Responsive layout • Accessible markup • No frameworks required</div>
+          <hr />
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div class="card" style="padding:10px;min-width:120px">Fast to edit</div>
+            <div class="card" style="padding:10px;min-width:120px">Lightweight</div>
+            <div class="card" style="padding:10px;min-width:120px">Deploy easily</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" style="margin-top:28px">
+      <h2 style="margin:6px 0">Features</h2>
+      <div class="grid-2">
+        <div>
+          <div class="features">
+            <article class="card">
+              <h3 style="margin:0 0 6px 0">Responsive</h3>
+              <p class="muted">Design adapts from mobile to large screens automatically.</p>
+            </article>
+            <article class="card">
+              <h3 style="margin:0 0 6px 0">Accessible</h3>
+              <p class="muted">Keyboard friendly, clear focus states, and semantic elements.</p>
+            </article>
+            <article class="card">
+              <h3 style="margin:0 0 6px 0">Customizable</h3>
+              <p class="muted">Change colors, fonts, and content easily.</p>
+            </article>
+            <article class="card">
+              <h3 style="margin:0 0 6px 0">No dependencies</h3>
+              <p class="muted">Pure HTML/CSS/JS — lightweight and fast to load.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h3 style="margin-top:0">Get this starter</h3>
+          <p class="muted">Copy the file, edit the text and visuals, and deploy to GitHub Pages, Netlify, or any static host.</p>
+          <p style="margin:8px 0"><strong>Tip:</strong> Replace the placeholder gallery images with your own by swapping image URLs.</p>
+          <a href="#contact" class="cta">Request custom version</a>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gallery" style="margin-top:28px">
+      <h2 style="margin:6px 0">Gallery</h2>
+      <div class="gallery">
+        <img src="https://picsum.photos/seed/1/600/400" alt="Placeholder 1">
+        <img src="https://picsum.photos/seed/2/600/400" alt="Placeholder 2">
+        <img src="https://picsum.photos/seed/3/600/400" alt="Placeholder 3">
+        <img src="https://picsum.photos/seed/4/600/400" alt="Placeholder 4">
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:28px">
+      <h2 style="margin:6px 0">Contact</h2>
+      <div class="card">
+        <form id="contactForm" novalidate>
+          <label>
+            <div style="font-weight:600">Your name</div>
+            <input type="text" id="name" required placeholder="Jane Appleseed">
+          </label>
+          <label>
+            <div style="font-weight:600">Email</div>
+            <input type="email" id="email" required placeholder="name@example.com">
+          </label>
+          <label>
+            <div style="font-weight:600">Message</div>
+            <textarea id="message" rows="4" placeholder="Tell us about your project" required></textarea>
+          </label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button type="submit">Send message</button>
+            <div id="formMsg" class="muted" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="muted">© Acme — Built with ❤️</div>
+      <div class="muted">Made for demo & portfolio</div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', ()=>{
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.style.display = expanded ? 'none' : 'block';
+    });
+
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href && href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      })
+    });
+
+    // Contact form handling (client-side only)
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      formMsg.textContent = '';
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){ formMsg.textContent = 'Please complete all fields.'; return }
+      // Simulate sending — in a real site you'd POST to a server or use a service
+      formMsg.textContent = 'Sending...';
+      setTimeout(()=>{
+        formMsg.textContent = 'Thanks! Your message was received (demo).';
+        form.reset();
+      },800);
+    });
+  </script>
+</body>
+</html>
